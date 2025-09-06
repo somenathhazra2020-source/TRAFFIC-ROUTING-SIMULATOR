@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Traffic Routing Simulator (Dijkstra's Algorithm)</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 40px;}
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);}
+        h2 { text-align: center; }
+        label { display: block; margin-top: 15px;}
+        select, button { width: 100%; padding: 8px; margin-top: 8px;}
+        .result { margin-top: 25px; background: #e8f5e9; padding: 15px; border-radius: 8px; }
+        .error { margin-top: 25px; background: #ffebee; padding: 15px; border-radius: 8px; color: #c62828;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Traffic Routing Simulator<br><small>Dijkstra's Algorithm</small></h2>
+        <form method="post">
+            <label for="start">Start Node:</label>
+            <select name="start" id="start" required>
+                {% for node in nodes %}
+                    <option value="{{ node }}">{{ node }}</option>
+                {% endfor %}
+            </select>
+            <label for="end">End Node:</label>
+            <select name="end" id="end" required>
+                {% for node in nodes %}
+                    <option value="{{ node }}">{{ node }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Find Shortest Path</button>
+        </form>
+        {% if result %}
+            {% if result.error %}
+                <div class="error">{{ result.error }}</div>
+            {% else %}
+                <div class="result">
+                    <strong>Shortest path from {{ result.start }} to {{ result.end }}:</strong><br>
+                    {{ result.path }}<br>
+                    <strong>Total distance:</strong> {{ result.distance }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
